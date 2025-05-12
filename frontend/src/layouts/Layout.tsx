@@ -1,16 +1,16 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { Outlet } from "react-router-dom";
-
-
-
-
-const Layout = () => {
+import Hero from "@/components/Hero";
+interface Props {
+  children: React.ReactNode;
+}
+const Layout = ({ children }: Props) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-    <main className="flex-1">
-        <Outlet />
-      </main>
+      <Hero />
+       <div className="container mx-auto py-10 flex-1">{children}</div>
+      <Footer />
     </div>
   );
 };
