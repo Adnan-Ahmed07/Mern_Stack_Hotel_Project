@@ -1,6 +1,8 @@
 import type { RegisterFormData } from "./pages/Register";
 import type { SignInFormData } from "./pages/SignIn";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+
+
 export const register = async (formData: RegisterFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
@@ -17,7 +19,6 @@ export const register = async (formData: RegisterFormData) => {
     throw new Error(responseBody.message);
   }
 };
-
 
 export const signIn = async (formData: SignInFormData) => {
   const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
