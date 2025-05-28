@@ -24,8 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.2",
-    "multer": "^2.0.0",
-    "path-to-regexp": "^6.3.0"
+    "multer": "^2.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
