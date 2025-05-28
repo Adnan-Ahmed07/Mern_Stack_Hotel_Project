@@ -10,6 +10,11 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.21"
+    "@types/node": "^22.15.24",
+    "import-path": "^1.0.15"
+  },
+  "dependencies": {
+    "normalize-path": "^3.0.0",
+    "path-browserify": "^1.0.1"
   }
 }

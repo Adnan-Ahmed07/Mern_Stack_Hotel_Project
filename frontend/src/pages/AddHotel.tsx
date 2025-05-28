@@ -1,25 +1,37 @@
-
+// frontend/src/pages/AddHotel.tsx
+import React from "react";
 import ManageHotelForm from "../forms/ManageHotelForm/ManageHotelForm";
 import { useAppContext } from "../contexts/AppContext";
+import { useMutation } from "@tanstack/react-query";
+import * as apiClient from "../api-client";
 
-
-const AddHotel = () => {
+const AddHotel: React.FC = () => {
   const { showToast } = useAppContext();
 
-  // const { mutate, isLoading } = useMutation(apiClient.addMyHotel, {
-  //   onSuccess: () => {
-  //     showToast({ message: "Hotel Saved!", type: "SUCCESS" });
-  //   },
-  //   onError: () => {
-  //     showToast({ message: "Error Saving Hotel", type: "ERROR" });
-  //   },
-  // });
+ 
+  const { mutate, status } = useMutation<any, Error, FormData>({
+    mutationFn: apiClient.addMyHotel,
+    onSuccess: () => {
+      showToast({ message: "Hotel Saved!", type: "SUCCESS" });
+    },
+    onError: () => {
+      showToast({ message: "Error Saving Hotel", type: "ERROR" });
+    },
+  });
 
-  // const handleSave = (hotelFormData: FormData) => {
-  //   mutate(hotelFormData);
-  // };
+ 
+  const isLoading = status === "pending";
 
-  return( <ManageHotelForm  />);
+  const handleSave = (hotelFormData: FormData) => {
+    mutate(hotelFormData);
+  };
+
+  return (
+    <ManageHotelForm
+      onSave={handleSave}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default AddHotel;
