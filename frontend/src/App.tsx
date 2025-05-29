@@ -1,12 +1,18 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import './App.css'; // This is crucial
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import "./App.css"; // This is crucial
 
 import Layout from "./layouts/Layout";
 import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import AddHotel from "./pages/AddHotel";
 import { useAppContext } from "./contexts/AppContext";
+import MyHotels from "./pages/MyHotels";
 
 function App() {
   const { isLoggedIn } = useAppContext();
@@ -21,13 +27,23 @@ function App() {
             </Layout>
           }
         />
-          <Route path="/search" element={ <Layout>
+        <Route
+          path="/search"
+          element={
+            <Layout>
               <p>Search Page</p>
-            </Layout>}/>
-               <Route  path="/register" element={ <Layout>
-             <Register/>
-            </Layout>}/>
- <Route
+            </Layout>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Layout>
+              <Register />
+            </Layout>
+          }
+        />
+        <Route
           path="/sign-in"
           element={
             <Layout>
@@ -35,9 +51,9 @@ function App() {
             </Layout>
           }
         />
-      {isLoggedIn && (
-        <>
-         <Route
+        {isLoggedIn && (
+          <>
+            <Route
               path="/add-hotel"
               element={
                 <Layout>
@@ -45,12 +61,19 @@ function App() {
                 </Layout>
               }
             />
-        </>
-      )}
-          <Route path="*" element={<Navigate to="/" />} />
+            <Route
+              path="/my-hotels"
+              element={
+                <Layout>
+                  <MyHotels />
+                </Layout>
+              }
+            />
+          </>
+        )}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
-
   );
 }
 
