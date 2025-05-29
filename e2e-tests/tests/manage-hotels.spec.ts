@@ -1,4 +1,3 @@
-// e2e-tests/tests/manage-hotels.spec.ts
 import { test, expect, Page } from "@playwright/test";
 import path from "path";
 
@@ -49,20 +48,20 @@ test("should allow user to add a hotel", async ({ page }) => {
   await page.fill('[name="adultCount"]', "2");
   await page.fill('[name="childCount"]', "4");
 
-  
+  // File input selector
   const fileInputSelector = 'input[type="file"][name="imageFiles"]';
-  
   await expect(page.locator(fileInputSelector)).toHaveCount(1, {
     timeout: 5_000,
   });
 
-
+  // Resolve file paths
   const file1 = path.resolve(__dirname, "files", "1.png");
   const file2 = path.resolve(__dirname, "files", "2.png");
 
- 
+  // Upload multiple files at once
   await page.setInputFiles(fileInputSelector, [file1, file2]);
 
+  // Submit and wait for response
   await Promise.all([
     page.waitForResponse((resp) =>
       resp.url().endsWith("/api/my-hotels") && resp.status() === 201
@@ -70,7 +69,25 @@ test("should allow user to add a hotel", async ({ page }) => {
     page.getByRole("button", { name: "Save" }).click(),
   ]);
 
+  // Confirmation
   await expect(page.getByText("Hotel Saved!")).toBeVisible({
     timeout: 10_000,
   });
+});
+
+test("should display hotels", async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
+
+  await expect(page.getByText("Dublin Getaways")).toBeVisible();
+  await expect(page.getByText("Lorem ipsum dolor sit amet")).toBeVisible();
+  await expect(page.getByText("Dublin, Ireland")).toBeVisible();
+  await expect(page.getByText("All Inclusive")).toBeVisible();
+  await expect(page.getByText("£119 per night")).toBeVisible();
+  await expect(page.getByText("2 adults, 3 children")).toBeVisible();
+  await expect(page.getByText("2 Star Rating")).toBeVisible();
+
+  await expect(
+    page.getByRole("link", { name: "View Details" }).first()
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Add Hotel" })).toBeVisible();
 });
