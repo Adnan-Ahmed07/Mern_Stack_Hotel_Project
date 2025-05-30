@@ -13,6 +13,7 @@ const SearchBar = () => {
   const [checkOut, setCheckOut] = useState<Date>(search.checkOut);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
   const [childCount, setChildCount] = useState<number>(search.childCount);
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     search.saveSearchValues(
@@ -24,9 +25,11 @@ const SearchBar = () => {
     );
     navigate("/search");
   };
+
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1);
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -41,6 +44,7 @@ const SearchBar = () => {
           onChange={(event) => setDestination(event.target.value)}
         />
       </div>
+
       <div className="flex bg-white px-2 py-1 gap-2">
         <label className="items-center flex">
           Adults:
@@ -64,6 +68,20 @@ const SearchBar = () => {
             onChange={(event) => setChildCount(parseInt(event.target.value))}
           />
         </label>
+      </div>
+      <div>
+        <DatePicker
+          selected={checkIn}
+          onChange={(date) => setCheckIn(date as Date)}
+          selectsStart
+          startDate={checkIn}
+          endDate={checkOut}
+          minDate={minDate}
+          maxDate={maxDate}
+          placeholderText="Check-in Date"
+          className="min-w-full bg-white p-2 focus:outline-none"
+          wrapperClassName="min-w-full"
+        />
       </div>
       <div>
         <DatePicker
